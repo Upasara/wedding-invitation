@@ -49,6 +49,10 @@ export function InvitationExperience({
     }
   }, []);
 
+  const handleStartCoverInteraction = () => {
+    setHasInteracted(true);
+  };
+
   const handleOpenCover = () => {
     setHasInteracted(true);
     setIsCoverOpen(true);
@@ -63,6 +67,7 @@ export function InvitationExperience({
       {/* Interactive Luxury Opening Cover */}
       <OpeningCover
         isOpen={isCoverOpen}
+        onInteract={handleStartCoverInteraction}
         onOpen={handleOpenCover}
         content={content}
         householdSession={householdSession}

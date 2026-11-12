@@ -1,4 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import fs from 'fs';
 import path from 'path';
 import * as XLSX from 'xlsx';
@@ -12,6 +14,7 @@ import {
   POST as adminAccountPost,
 } from '@/app/api/admin/auth/account/route';
 import ProtectedAdminLayout from '@/app/admin/(protected)/layout';
+import { OpeningCover } from '@/components/public/OpeningCover';
 import { verifyFileMagicBytes } from '@/lib/security/file-validation';
 import { verifyTurnstileToken } from '@/lib/security/turnstile';
 import { getAdminUserByUid, resetLocalDatabaseToSeed } from '@/lib/db/repository';
@@ -419,6 +422,51 @@ describe('API Route Handlers & Security Controls Integration Suite', () => {
     } finally {
       spy.mockRestore();
     }
+  });
+
+  it('12. renders OpeningCover with full-screen /videos/wedding-intro.mp4 background, playsInline, preload=auto, mobile object-position framing, no autoplay/loop, and unmounts when opened', async () => {
+    const videoFilePath = path.join(
+      process.cwd(),
+      'public',
+      'videos',
+      'wedding-intro.mp4'
+    );
+    expect(fs.existsSync(videoFilePath)).toBe(true);
+    expect(fs.statSync(videoFilePath).size).toBeGreaterThan(1000);
+
+    const res = await publicInvitationGet();
+    const payload = await res.json();
+
+    const closedMarkup = renderToStaticMarkup(
+      React.createElement(OpeningCover, {
+        isOpen: false,
+        onOpen: () => {},
+        onInteract: () => {},
+        content: payload.content,
+        householdSession: null,
+      })
+    );
+
+    expect(closedMarkup).toContain('src="/videos/wedding-intro.mp4"');
+    expect(closedMarkup).toContain('playsInline=""');
+    expect(closedMarkup).toContain('preload="auto"');
+    expect(closedMarkup).toContain(
+      'h-full w-full object-cover object-[50%_38%] sm:object-center'
+    );
+    expect(closedMarkup).not.toContain('autoplay');
+    expect(closedMarkup).not.toContain('loop');
+    expect(closedMarkup).toContain('Open Invitation');
+
+    const openedMarkup = renderToStaticMarkup(
+      React.createElement(OpeningCover, {
+        isOpen: true,
+        onOpen: () => {},
+        onInteract: () => {},
+        content: payload.content,
+        householdSession: null,
+      })
+    );
+    expect(openedMarkup).toBe('');
   });
 });
 
