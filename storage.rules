@@ -1,0 +1,36 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.role == 'admin' ||
+        request.auth.token.role == 'super_admin'
+      );
+    }
+
+    function isValidImage() {
+      return request.resource.size < 8 * 1024 * 1024 &&
+             request.resource.contentType.matches('image/(jpeg|png|webp|avif)');
+    }
+
+    function isValidAudio() {
+      return request.resource.size < 20 * 1024 * 1024 &&
+             request.resource.contentType.matches('audio/(mpeg|mp3|wav|ogg|aac|mp4)');
+    }
+
+    match /wedding/images/{fileName} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidImage();
+    }
+
+    match /wedding/audio/{fileName} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidAudio();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

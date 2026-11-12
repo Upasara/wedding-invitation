@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ivory: #FAF7F2;
+  --color-warm-white: #FFFFFF;
+  --color-charcoal: #1C1C1C;
+  --color-soft-gold: #C5A880;
+  --color-metallic-gold: #D4AF37;
+  --color-muted-gray: #77736D;
+  --color-editorial-border: #E6DFD3;
+  --font-cormorant: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-playfair: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-montserrat: 'Montserrat', system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #FAF7F2;
+  color: #1C1C1C;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #FAF7F2;
+  color: #1C1C1C;
+  font-family: var(--font-montserrat), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Luxury Focus Ring for Keyboard Accessibility */
+*:focus-visible {
+  outline: 2px solid #C5A880;
+  outline-offset: 2px;
+}
+
+/* Editorial Divider Hairline */
+.editorial-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(197, 168, 128, 0) 0%,
+    rgba(197, 168, 128, 0.75) 50%,
+    rgba(197, 168, 128, 0) 100%
+  );
+}

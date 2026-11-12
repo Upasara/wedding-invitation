@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FAF7F2"/>
+      <stop offset="55%" stop-color="#F3EDE2"/>
+      <stop offset="100%" stop-color="#E9E0D1"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="42%" r="48%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#FAF7F2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <rect width="800" height="1000" fill="url(#glow)"/>
+  <rect x="36" y="36" width="728" height="928" fill="none" stroke="#C5A880" stroke-width="1.2" opacity="0.65"/>
+  <rect x="48" y="48" width="704" height="904" fill="none" stroke="#1C1C1C" stroke-width="0.6" opacity="0.22"/>
+  
+  <!-- Classical Botanical / Architectural Arch Motif -->
+  <path d="M 192 720 L 192 360 A 208 208 0 0 1 608 360 L 608 720 Z" fill="none" stroke="#C5A880" stroke-width="1.4" opacity="0.7"/>
+  <circle cx="400" cy="380" r="112.00000000000001" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.5"/>
+  <line x1="280" y1="560" x2="520" y2="560" stroke="#C5A880" stroke-width="1"/>
+
+  <text x="400" y="370" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#77736D" letter-spacing="5">FINE ART PORTRAIT</text>
+  <text x="400" y="440" text-anchor="middle" font-family="Georgia, serif" font-size="32" font-style="italic" fill="#1C1C1C">Sebastian Sterling</text>
+  <text x="400" y="610" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#77736D" letter-spacing="3">THE GROOM</text>
+  <text x="400" y="926" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#77736D" letter-spacing="2">EDITORIAL PLACEHOLDER PHOTOGRAPH • REPLACE IN ADMIN</text>
+</svg>

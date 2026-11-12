@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'admin' ||
+        request.auth.token.role == 'super_admin' ||
+        exists(/databases/$(database)/documents/admin_users/$(request.auth.uid))
+      );
+    }
+
+    // Public read-only editorial collections (writes strictly via server Admin SDK or verified admin)
+    match /wedding_content/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /events/{eventId} {
+      allow read: if resource.data.active == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /story_entries/{entryId} {
+      allow read: if resource.data.active == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /gallery_images/{imageId} {
+      allow read: if resource.data.active == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /wedding_party/{memberId} {
+      allow read: if resource.data.active == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /faqs/{faqId} {
+      allow read: if resource.data.active == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // Settings: only non-sensitive public projections are exposed via server API;
+    // Direct client reads/writes denied to non-admins.
+    match /wedding_settings/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Sensitive private collections: STRICTLY DENY direct client access.
+    // All household verification and RSVP mutations must pass through server Route Handlers
+    // which enforce HMAC-SHA256 verification, rate limiting, and atomic capacity rules.
+    match /households/{householdId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /rsvps/{rsvpId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /idempotency_records/{recordId} {
+      allow read, write: if false;
+    }
+
+    match /revoked_invitations/{revocationId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /admin_users/{adminId} {
+      allow read: if isAdmin() && request.auth.uid == adminId;
+      allow write: if false;
+    }
+
+    // Default deny-all fallback
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
