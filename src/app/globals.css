@@ -47,3 +47,12 @@ body {
     rgba(197, 168, 128, 0) 100%
   );
 }
+
+/* Hide scrollbars cleanly for compact mobile horizontal pill navigation */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

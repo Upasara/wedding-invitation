@@ -15,6 +15,7 @@ import {
 } from '@/app/api/admin/auth/account/route';
 import ProtectedAdminLayout from '@/app/admin/(protected)/layout';
 import { OpeningCover } from '@/components/public/OpeningCover';
+import { FloatingNav } from '@/components/public/FloatingNav';
 import { verifyFileMagicBytes } from '@/lib/security/file-validation';
 import { verifyTurnstileToken } from '@/lib/security/turnstile';
 import { getAdminUserByUid, resetLocalDatabaseToSeed } from '@/lib/db/repository';
@@ -467,6 +468,55 @@ describe('API Route Handlers & Security Controls Integration Suite', () => {
       })
     );
     expect(openedMarkup).toBe('');
+  });
+
+  it('13. renders FloatingNav only after the invitation is opened with all preserved destinations, pill styling, and iOS safe-area support', async () => {
+    const res = await publicInvitationGet();
+    const payload = await res.json();
+
+    const hiddenMarkup = renderToStaticMarkup(
+      React.createElement(FloatingNav, {
+        visible: false,
+        monogram: payload.content.coupleNames.monogram,
+        visibility: payload.settings.sectionVisibility,
+        counts: {
+          events: payload.events.length,
+          gallery: payload.galleryImages.length,
+          weddingParty: payload.weddingParty.length,
+          faqs: payload.faqs.length,
+        },
+      })
+    );
+    expect(hiddenMarkup).toBe('');
+
+    const visibleMarkup = renderToStaticMarkup(
+      React.createElement(FloatingNav, {
+        visible: true,
+        monogram: payload.content.coupleNames.monogram,
+        visibility: payload.settings.sectionVisibility,
+        counts: {
+          events: payload.events.length,
+          gallery: payload.galleryImages.length,
+          weddingParty: payload.weddingParty.length,
+          faqs: payload.faqs.length,
+        },
+      })
+    );
+
+    expect(visibleMarkup).toContain('aria-label="Invitation sections"');
+    expect(visibleMarkup).toContain('left-1/2 -translate-x-1/2 z-40');
+    expect(visibleMarkup).toContain('rounded-full');
+    expect(visibleMarkup).toContain('env(safe-area-inset-bottom');
+    expect(visibleMarkup).toContain('no-scrollbar');
+    expect(visibleMarkup).toContain('href="#hero"');
+    expect(visibleMarkup).toContain('href="#invitation-message"');
+    expect(visibleMarkup).toContain('href="#our-story"');
+    expect(visibleMarkup).toContain('href="#events"');
+    expect(visibleMarkup).toContain('href="#gallery"');
+    expect(visibleMarkup).toContain('href="#wedding-party"');
+    expect(visibleMarkup).toContain('href="#rsvp"');
+    expect(visibleMarkup).toContain('href="#qa"');
+    expect(visibleMarkup).toContain('aria-current="location"');
   });
 });
 

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, MailOpen } from 'lucide-react';
-import { PublicHouseholdSessionView, WeddingContent } from '@/lib/types/domain';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Sparkles, MailOpen } from "lucide-react";
+import { PublicHouseholdSessionView, WeddingContent } from "@/lib/types/domain";
 
-const INTRO_VIDEO_SRC = '/videos/wedding-intro.mp4';
+const INTRO_VIDEO_SRC = "/videos/wedding-intro.mp4";
 
 interface OpeningCoverProps {
   isOpen: boolean;
@@ -32,17 +32,17 @@ export function OpeningCover({
 
   // Detect prefers-reduced-motion
   useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) return;
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
 
     const handleChange = (event: MediaQueryListEvent) => {
       setPrefersReducedMotion(event.matches);
     };
 
-    mediaQuery.addEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handleChange);
     return () => {
-      mediaQuery.removeEventListener('change', handleChange);
+      mediaQuery.removeEventListener("change", handleChange);
     };
   }, []);
 
@@ -127,11 +127,11 @@ export function OpeningCover({
           initial={{ opacity: 1 }}
           exit={
             prefersReducedMotion
-              ? { opacity: 0, transition: { duration: 0.3, ease: 'easeOut' } }
+              ? { opacity: 0, transition: { duration: 0.3, ease: "easeOut" } }
               : {
                   opacity: 0,
                   scale: 1.03,
-                  filter: 'blur(6px)',
+                  filter: "blur(6px)",
                   transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
                 }
           }
@@ -161,8 +161,8 @@ export function OpeningCover({
               <div
                 className={` inset-0 absolute transition-opacity duration-700 ${
                   isPlayingVideo
-                    ? 'bg-gradient-to-b from-charcoal/20 via-transparent to-charcoal/30 opacity-70'
-                    : 'bg-gradient-to-b from-charcoal/45 via-charcoal/25 to-charcoal/50 opacity-100'
+                    ? "bg-gradient-to-b from-charcoal/20 via-transparent to-charcoal/30 opacity-70"
+                    : "bg-gradient-to-b from-charcoal/45 via-charcoal/25 to-charcoal/50 opacity-100"
                 }`}
               />
             </div>
@@ -183,11 +183,11 @@ export function OpeningCover({
                     opacity: 1,
                     scale: 1,
                     y: 0,
-                    transition: { duration: 0.7, ease: 'easeOut' },
+                    transition: { duration: 0.7, ease: "easeOut" },
                   }
             }
-            className={`relative z-10 w-full max-w-2xl bg-warmWhite/95 backdrop-blur-[2px] border border-softGold/60 shadow-editorial p-3 sm:p-5 my-auto ${
-              isPlayingVideo ? 'pointer-events-none select-none' : ''
+            className={`relative z-10 w-full max-w-2xl bg-warmWhite/80 backdrop-blur-[2px] border border-softGold/60 shadow-editorial p-3 sm:p-5 my-auto ${
+              isPlayingVideo ? "pointer-events-none select-none" : ""
             }`}
           >
             {/* Inner Double Hairline Frame */}
@@ -230,13 +230,16 @@ export function OpeningCover({
               {householdSession ? (
                 <div className="my-4 w-full max-w-md rounded-none border border-softGold/40 bg-ivory/80 px-4 py-4">
                   <p className="font-montserrat text-[10px] uppercase tracking-editorial text-softGold mb-1 flex items-center justify-center gap-1.5">
-                    <Sparkles className="h-3 w-3" /> Personal Invitation Reserved For
+                    <Sparkles className="h-3 w-3" /> Personal Invitation
+                    Reserved For
                   </p>
                   <p className="font-cormorant text-2xl sm:text-3xl font-medium text-charcoal">
                     {householdSession.displayName}
                   </p>
                   <p className="mt-1.5 font-montserrat text-xs text-mutedGray">
-                    {householdSession.members.map((m) => m.fullName).join(' • ')}
+                    {householdSession.members
+                      .map((m) => m.fullName)
+                      .join(" • ")}
                   </p>
                 </div>
               ) : (
@@ -268,4 +271,3 @@ export function OpeningCover({
     </AnimatePresence>
   );
 }
-

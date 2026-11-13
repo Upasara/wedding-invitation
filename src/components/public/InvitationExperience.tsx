@@ -7,6 +7,7 @@ import {
 } from '@/lib/types/domain';
 import { OpeningCover } from '@/components/public/OpeningCover';
 import { AudioPlayer } from '@/components/public/AudioPlayer';
+import { FloatingNav } from '@/components/public/FloatingNav';
 import { HeroSection } from '@/components/public/HeroSection';
 import { FormalMessageSection } from '@/components/public/FormalMessageSection';
 import { StorySection } from '@/components/public/StorySection';
@@ -80,79 +81,27 @@ export function InvitationExperience({
         hasInteracted={hasInteracted}
       />
 
-      {/* Sticky Minimal Editorial Navigation Bar */}
-      <header className="sticky top-0 z-30 border-b border-editorialBorder bg-ivory/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5 sm:px-8">
-          <a
-            href="#hero"
-            className="font-cormorant text-xl sm:text-2xl italic tracking-wider text-charcoal"
-          >
-            {content.coupleNames.monogram}
-          </a>
-
-          <nav
-            aria-label="Invitation sections"
-            className="flex items-center gap-3 sm:gap-7 overflow-x-auto py-1 font-montserrat text-[10px] sm:text-xs uppercase tracking-luxury text-mutedGray"
-          >
-            {vis.invitationMessage && (
-              <a
-                href="#invitation-message"
-                className="whitespace-nowrap hover:text-charcoal transition-colors"
-              >
-                Invitation
-              </a>
-            )}
-            {vis.story && (
-              <a
-                href="#our-story"
-                className="whitespace-nowrap hover:text-charcoal transition-colors"
-              >
-                Our Story
-              </a>
-            )}
-            {vis.events && events.length > 0 && (
-              <a
-                href="#events"
-                className="whitespace-nowrap hover:text-charcoal transition-colors"
-              >
-                Events
-              </a>
-            )}
-            {vis.gallery && galleryImages.length > 0 && (
-              <a
-                href="#gallery"
-                className="whitespace-nowrap hover:text-charcoal transition-colors"
-              >
-                Gallery
-              </a>
-            )}
-            {vis.weddingParty && weddingParty.length > 0 && (
-              <a
-                href="#wedding-party"
-                className="whitespace-nowrap hover:text-charcoal transition-colors"
-              >
-                Wedding Party
-              </a>
-            )}
-            {vis.rsvp && (
-              <a
-                href="#rsvp"
-                className="whitespace-nowrap border border-softGold bg-warmWhite px-3 py-1 text-charcoal hover:bg-charcoal hover:text-ivory transition-colors"
-              >
-                RSVP
-              </a>
-            )}
-            {vis.faq && faqs.length > 0 && (
-              <a
-                href="#qa"
-                className="whitespace-nowrap hover:text-charcoal transition-colors"
-              >
-                Q&amp;A
-              </a>
-            )}
-          </nav>
-        </div>
-      </header>
+      {/* Floating Bottom-Centre Glassmorphism Navigation Pill (visible only after opening cover) */}
+      <FloatingNav
+        visible={isCoverOpen}
+        monogram={content.coupleNames.monogram}
+        visibility={{
+          hero: vis.hero,
+          invitationMessage: vis.invitationMessage,
+          story: vis.story,
+          events: vis.events,
+          gallery: vis.gallery,
+          weddingParty: vis.weddingParty,
+          rsvp: vis.rsvp,
+          faq: vis.faq,
+        }}
+        counts={{
+          events: events.length,
+          gallery: galleryImages.length,
+          weddingParty: weddingParty.length,
+          faqs: faqs.length,
+        }}
+      />
 
       {/* Main Continuous Editorial Experience */}
       <main>

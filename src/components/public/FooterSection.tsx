@@ -11,7 +11,7 @@ interface FooterSectionProps {
 
 export function FooterSection({ content }: FooterSectionProps) {
   return (
-    <footer className="bg-ivory py-16 sm:py-24 text-center">
+    <footer className="bg-ivory pt-16 pb-28 sm:pt-24 sm:pb-32 text-center">
       <div className="mx-auto max-w-4xl px-4 sm:px-8">
         <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full border border-softGold/70 bg-warmWhite">
           <span className="font-cormorant text-lg italic text-charcoal">

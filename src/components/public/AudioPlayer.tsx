@@ -71,7 +71,7 @@ export function AudioPlayer({
 
   return (
     <div
-      className="fixed bottom-5 right-5 z-40 flex items-center gap-1.5 border border-softGold/60 bg-warmWhite/95 px-3 py-2 shadow-editorial backdrop-blur-sm"
+      className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] right-4 z-40 flex items-center gap-1.5 border border-softGold/60 bg-warmWhite/95 px-3 py-2 shadow-editorial backdrop-blur-sm sm:bottom-6 sm:right-6"
       role="region"
       aria-label={audioTitle || 'Background wedding music controls'}
     >
